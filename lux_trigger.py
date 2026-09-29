@@ -27,7 +27,7 @@ from zoneinfo import ZoneInfo
 # ---------- TUNE THESE ----------
 LATITUDE = 40.7831      # Manhattan — change to your exact spot
 LONGITUDE = -73.9712
-DARK_WM2 = 25.0         # lamps ON when radiation drops below this
+DARK_WM2 = 32.0         # lamps ON when radiation drops below this
 BRIGHT_WM2 = 60.0       # lamps OFF when radiation rises above this
 LOOKBACK = 4            # how many 15-min intervals back to look for a crossing
 TZ = "America/New_York"
