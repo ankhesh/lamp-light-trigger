@@ -27,7 +27,7 @@ from zoneinfo import ZoneInfo
 # ---------- TUNE THESE ----------
 LATITUDE = 40.7831      # Manhattan — change to your exact spot
 LONGITUDE = -73.9712
-DARK_WM2 = 32.0         # lamps ON when radiation drops below this
+DARK_WM2 = 29.0         # lamps ON when radiation drops below this
 BRIGHT_WM2 = 60.0       # lamps OFF when radiation rises above this
 TZ = "America/New_York"
 # Only act on a reading if it is this fresh. Runs are 5 min apart, so exactly
