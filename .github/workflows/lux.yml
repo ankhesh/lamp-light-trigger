@@ -1,21 +1,25 @@
-# Save as .github/workflows/lux.yml in your GitHub repo
 name: Outdoor light lamp trigger
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # every 5 minutes (GitHub may delay runs a little)
-  workflow_dispatch:         # lets you click "Run workflow" to test manually
+    - cron: "*/5 * * * *"   # backup timer; cron-job.org is the main one
+  workflow_dispatch:         # cron-job.org starts runs through this
+
+# During a GitHub outage, runs can sit waiting for a machine and then fail
+# after 15 minutes. This keeps only the newest run: an older stuck run is
+# cancelled (no failure email) as soon as the next one is queued.
+concurrency:
+  group: lamp-trigger
+  cancel-in-progress: true
 
 jobs:
   check-light:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04      # pinned so the Oct 2026 Ubuntu 26 switch can't break it
+    timeout-minutes: 4         # a normal run takes ~10 seconds
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - uses: actions/checkout@v5
       - name: Check outdoor light and trigger Alexa
         env:
           LIGHTS_ON_URL: ${{ secrets.LIGHTS_ON_URL }}
           LIGHTS_OFF_URL: ${{ secrets.LIGHTS_OFF_URL }}
-        run: python lux_trigger.py
+        run: python3 lux_trigger.py   # Python 3.12 is preinstalled on the runner
